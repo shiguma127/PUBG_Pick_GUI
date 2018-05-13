@@ -17,7 +17,7 @@ public class Main {
         contentPane.add(buttonE,BorderLayout.EAST);
         contentPane.add(buttonM,BorderLayout.WEST);
 
-
+//イベント
         buttonE.addActionListener(e -> {
             Erangel randame = Erangel.getRandom();
             JOptionPane.showMessageDialog(null, randame.getname()+" が選ばれました");
