@@ -17,7 +17,6 @@ public class Main {
         contentPane.add(buttonE,BorderLayout.EAST);
         contentPane.add(buttonM,BorderLayout.WEST);
 
-        //aaaaaaaaa
 
         buttonE.addActionListener(e -> {
             Erangel randame = Erangel.getRandom();
