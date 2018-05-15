@@ -2,6 +2,7 @@ package PickGUI;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -34,5 +35,33 @@ public class Main {
             JOptionPane.showMessageDialog(null, "ポチンキ が選ばれました");
 
         });
+
+        //ConsoleWind
+        PrintStream Stream = null;
+        try {
+            Stream = new PrintStream("log.txt");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        File f = new File("log.txt");
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(f));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+
+        System.setOut(Stream);
+        JTextArea area = new JTextArea(String.valueOf(Stream) );
+        area.setEditable(false);
+        JFrame consoleFrame = new JFrame("console");
+        consoleFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        consoleFrame.setSize(320,320);
+        consoleFrame.setLocationRelativeTo(null);
+        consoleFrame.setVisible(true);
+        consoleFrame.getContentPane().add(area);
+        System.out.println("aaaaa");
     }
+
 }
