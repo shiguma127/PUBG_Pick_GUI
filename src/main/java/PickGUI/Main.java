@@ -1,8 +1,12 @@
 package PickGUI;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
+
+
 
 public class Main {
     public static void main(String[] args) {
@@ -16,9 +20,16 @@ public class Main {
         JButton buttonE = new JButton("Erangel:島");
         JButton buttonM = new JButton("Miramar:砂漠");
         JButton buttonP = new JButton("ポチンキボタン");
+        JButton buttonS = new JButton("スクショ");
         contentPane.add(buttonE, BorderLayout.EAST);
         contentPane.add(buttonM, BorderLayout.WEST);
         contentPane.add(buttonP, BorderLayout.CENTER);
+        contentPane.add(buttonS, BorderLayout.SOUTH);
+        getrgb("test.png");
+
+
+
+
 
 //イベント
         buttonE.addActionListener(e -> {
@@ -36,32 +47,58 @@ public class Main {
 
         });
 
-        //ConsoleWind
-        PrintStream Stream = null;
-        try {
-            Stream = new PrintStream("log.txt");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        File f = new File("log.txt");
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(f));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        buttonS.addActionListener(e -> {
+            String filename = JOptionPane.showInputDialog(null,"ファイルネーム","");
+            screenshot("PNG",filename + ".png");
+
+        });
 
 
-
-        System.setOut(Stream);
-        JTextArea area = new JTextArea(String.valueOf(Stream) );
-        area.setEditable(false);
-        JFrame consoleFrame = new JFrame("console");
-        consoleFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        consoleFrame.setSize(320,320);
-        consoleFrame.setLocationRelativeTo(null);
-        consoleFrame.setVisible(true);
-        consoleFrame.getContentPane().add(area);
-        System.out.println("aaaaa");
     }
+
+
+    public static void screenshot(String formattype, String pathname){
+        Robot robot = null;
+        try {
+            robot = new Robot();
+        } catch (AWTException e) {
+            e.printStackTrace();
+        }
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        BufferedImage image = robot.createScreenCapture(
+                new Rectangle(0, 0, screenSize.width, screenSize.height));
+        try {
+            ImageIO.write(image, formattype, new File( pathname));
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+
+
+
+    }
+
+    public static void getrgb(String filename){
+        BufferedImage bi =null;
+            try {
+                bi = ImageIO.read(new File(filename));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            int width = bi.getWidth();
+            int hieght = bi.getHeight();
+
+            int[] pixels = bi.getRGB(0,0,width,hieght,null,0,width);
+        System.out.println(pixels);
+
+
+
+
+
+    }
+
+
+
 
 }
