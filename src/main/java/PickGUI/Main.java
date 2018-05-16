@@ -7,7 +7,6 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 
 
-
 public class Main {
     public static void main(String[] args) {
         new Main();
@@ -15,7 +14,6 @@ public class Main {
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setSize(560, 280);
         mainFrame.setLocationRelativeTo(null);
-        mainFrame.setVisible(true);
         Container contentPane = mainFrame.getContentPane();
         JButton buttonE = new JButton("Erangel:島");
         JButton buttonM = new JButton("Miramar:砂漠");
@@ -26,9 +24,7 @@ public class Main {
         contentPane.add(buttonP, BorderLayout.CENTER);
         contentPane.add(buttonS, BorderLayout.SOUTH);
         getrgb("test.png");
-
-
-
+        mainFrame.setVisible(true);
 
 
 //イベント
@@ -48,8 +44,8 @@ public class Main {
         });
 
         buttonS.addActionListener(e -> {
-            String filename = JOptionPane.showInputDialog(null,"ファイルネーム","");
-            screenshot("PNG",filename + ".png");
+            String filename = JOptionPane.showInputDialog(null, "ファイルネーム", "");
+            screenshot("PNG", filename + ".png");
 
         });
 
@@ -57,7 +53,9 @@ public class Main {
     }
 
 
-    public static void screenshot(String formattype, String pathname){
+    public static void screenshot(String formattype, String pathname) {
+        Thread thread = new Thread();
+
         Robot robot = null;
         try {
             robot = new Robot();
@@ -68,37 +66,31 @@ public class Main {
         BufferedImage image = robot.createScreenCapture(
                 new Rectangle(0, 0, screenSize.width, screenSize.height));
         try {
-            ImageIO.write(image, formattype, new File( pathname));
+            ImageIO.write(image, formattype, new File(pathname));
         } catch (IOException e) {
             e.printStackTrace();
 
         }
 
 
-
     }
 
-    public static void getrgb(String filename){
-        BufferedImage bi =null;
-            try {
-                bi = ImageIO.read(new File(filename));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+    public static void getrgb(String filename) {
+        BufferedImage bi = null;
+        try {
+            bi = ImageIO.read(new File(filename));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-            int width = bi.getWidth();
-            int hieght = bi.getHeight();
+        int width = bi.getWidth();
+        int hieght = bi.getHeight();
 
-            int[] pixels = bi.getRGB(0,0,width,hieght,null,0,width);
+        int[] pixels = bi.getRGB(0, 0, width, hieght, null, 0, width);
         System.out.println(pixels);
 
 
-
-
-
     }
-
-
 
 
 }
