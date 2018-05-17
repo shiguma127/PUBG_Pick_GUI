@@ -23,8 +23,8 @@ public class Main {
         contentPane.add(buttonM, BorderLayout.WEST);
         contentPane.add(buttonP, BorderLayout.CENTER);
         contentPane.add(buttonS, BorderLayout.SOUTH);
-        getrgb("test.png");
         mainFrame.setVisible(true);
+
 
 
 //イベント
@@ -44,8 +44,8 @@ public class Main {
         });
 
         buttonS.addActionListener(e -> {
-            String filename = JOptionPane.showInputDialog(null, "ファイルネーム", "");
-            screenshot("PNG", filename + ".png");
+            thread sure = new thread();
+            new Thread(sure).start();
 
         });
 
@@ -54,7 +54,7 @@ public class Main {
 
 
     public static void screenshot(String formattype, String pathname) {
-        Thread thread = new Thread();
+
 
         Robot robot = null;
         try {
@@ -75,7 +75,7 @@ public class Main {
 
     }
 
-    public static void getrgb(String filename) {
+    /*public static void getrgb(String filename) {
         BufferedImage bi = null;
         try {
             bi = ImageIO.read(new File(filename));
@@ -90,6 +90,22 @@ public class Main {
         System.out.println(pixels);
 
 
+    }*/
+
+    public static final class thread implements Runnable{
+        @Override
+        public void run() {
+            String filename = JOptionPane.showInputDialog(null, "ファイルネーム", "");
+            try{
+                Thread.sleep(1000);
+            }catch (InterruptedException e){
+            }
+            screenshot("PNG",filename+".png");
+            JOptionPane.showMessageDialog(null,"Saved Screenshot:"+filename);
+
+
+
+        }
     }
 
 
